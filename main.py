@@ -56,7 +56,7 @@ def main():
     args = get_args(
         model_name="MGDCR",
         dataset="acm",  # acm imdb
-        custom_key="Clu",  # Node: node classification  Clu: clustering   Sim: similarity    SemiNode: semi-supervised learning
+        custom_key="Node",  # Node: node classification  Clu: clustering   Sim: similarity    SemiNode: semi-supervised learning
     )
     if args.dataset == "imdb" or args.dataset == "acm" :
         args.length = 2
