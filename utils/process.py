@@ -48,41 +48,6 @@ def load_acm_mat(sc=3):
     return adj_list, truefeatures, label, idx_train, idx_val, idx_test, adj_fusion
 
 
-def load_dblp(sc=3):
-    data = pkl.load(open("data/dblp.pkl", "rb"))
-    label = data['label']
-
-    adj_edge1 = data["PAP"]
-    adj_edge2 = data["PPrefP"]
-    adj_edge3 = data["PATAP"]
-    adj_fusion1 = adj_edge1 + adj_edge2 + adj_edge3
-    adj_fusion = adj_fusion1.copy()
-    adj_fusion[adj_fusion < 3] = 0
-    adj_fusion[adj_fusion == 3] = 1
-
-    adj1 = data["PAP"] + np.eye(data["PAP"].shape[0])*sc
-    adj2 = data["PPrefP"] + np.eye(data["PPrefP"].shape[0])*sc
-    adj3 = data["PATAP"] + np.eye(data["PATAP"].shape[0])*sc
-    adj_fusion = adj_fusion + np.eye(adj_fusion.shape[0]) * 3
-
-
-
-    adj1 = sp.csr_matrix(adj1)
-    adj2 = sp.csr_matrix(adj2)
-    adj3 = sp.csr_matrix(adj3)
-    adj_fusion = sp.csr_matrix(adj_fusion)
-
-    adj_list = [adj1, adj2, adj3]
-
-    truefeatures = data['feature'].astype(float)
-    truefeatures = sp.lil_matrix(truefeatures)
-
-    idx_train = data['train_idx'].ravel()
-    idx_val = data['val_idx'].ravel()
-    idx_test = data['test_idx'].ravel()
-
-    return adj_list, truefeatures, label, idx_train, idx_val, idx_test, adj_fusion
-
 
 def load_imdb(sc=3):
     data = pkl.load(open("data/imdb.pkl", "rb"))
@@ -147,32 +112,6 @@ def encode_onehot(labels):
     labels_onehot = enc.transform(labels).toarray()
     return labels_onehot
 
-
-
-def load_freebase(sc=3):
-    type_num = 3492
-    ratio = [20, 40, 60]
-    # The order of node types: 0 m 1 d 2 a 3 w
-    path = "data/freebase/"
-    label = np.load(path + "labels.npy").astype('int32')
-    label = encode_onehot(label)
-    feat_m = sp.eye(type_num)
-    # Because none of M, D, A or W has features, we assign one-hot encodings to all of them.
-    mam = sp.load_npz(path + "mam.npz")
-    mdm = sp.load_npz(path + "mdm.npz")
-    mwm = sp.load_npz(path + "mwm.npz")
-    train = [np.load(path + "train_" + str(i) + ".npy") for i in ratio]
-    test = [np.load(path + "test_" + str(i) + ".npy") for i in ratio]
-    val = [np.load(path + "val_" + str(i) + ".npy") for i in ratio]
-
-    label = th.FloatTensor(label)
-    feat_m = th.FloatTensor(preprocess_features(feat_m))
-    adj_list = [mam, mdm, mwm]
-    adj_fusion = mam
-    train = [th.LongTensor(i) for i in train]
-    val = [th.LongTensor(i) for i in val]
-    test = [th.LongTensor(i) for i in test]
-    return  adj_list, feat_m, label, train[0], val[0], test[0], adj_fusion
 
 
 
