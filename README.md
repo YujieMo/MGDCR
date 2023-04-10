@@ -14,9 +14,9 @@ pip install -r requirements.txt
 
 ## Preparation
 
-weights see >>>[here](MGDCR/saved_model/)<<<.
+weights see >>>[here](saved_model/)<<<.
 
-Configs see >>>[here](MGDCR/args.yaml)<<<.
+Configs see >>>[here](args.yaml)<<<.
 
 Dataset (`--dataset-class`, `--dataset-name`,`--Custom-key`)
 
