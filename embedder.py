@@ -15,24 +15,16 @@ class embedder:
         else:
             args.device = torch.device("cuda:" + str(args.gpu_num_) if torch.cuda.is_available() else "cpu")
 
-        if args.dataset == "dblp":
-            adj_list, features, labels, idx_train, idx_val, idx_test, adj_fusion = process.load_dblp(args.sc)
-            features = process.preprocess_features(features)
         if args.dataset == "acm":
             adj_list, features, labels, idx_train, idx_val, idx_test, adj_fusion = process.load_acm_mat()
             features = process.preprocess_features(features)
         if args.dataset == "imdb":
             adj_list, features, labels, idx_train, idx_val, idx_test, adj_fusion = process.load_imdb(args.sc)
             features = process.preprocess_features(features)
-        if args.dataset == "freebase":
-            adj_list, features, labels, idx_train, idx_val, idx_test, adj_fusion = process.load_freebase(args.sc)
-            args.ft_size = features[0].shape[0]
-            args.nb_nodes = adj_list[0].shape[0]
-            args.nb_classes = labels.shape[1]
 
 
 
-        if args.dataset in ["dblp", "acm", "imdb", "freebase"]:
+        if args.dataset in ["acm", "imdb"]:
             adj_list = [process.sparse_mx_to_torch_sparse_tensor(adj) for adj in adj_list]
             adj_list = [adj.to_dense() for adj in adj_list]
             adj_list = [process.normalize_graph(adj) for adj in adj_list]
