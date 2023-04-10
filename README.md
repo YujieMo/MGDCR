@@ -22,7 +22,7 @@ Dataset (`--dataset-class`, `--dataset-name`,`--Custom-key`)
 
 Important args:
 * `--pretrain` Test checkpoints
-* `--dataset-name` acm, imdb, dblp, freebase
+* `--dataset-name` acm, imdb
 * `--custom_key` Node: node classification  Clu: clustering   Sim: similarity SemiNode: semi-supervised learning
 ## Training
 python main.py
