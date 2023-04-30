@@ -1,6 +1,6 @@
 # Multiplex Graph Representation Learning via Dual Correlation Reduction
 
-This repository contains the reference code for the paper "Simple Self-supervised Multiplex Graph Representation Learning" and its extended version "Multiplex Graph Representation Learning via Dual Correlation Reduction". 
+This repository contains the reference code for the paper "Multiplex Graph Representation Learning via Dual Correlation Reduction". 
 
 ## Contents
 
